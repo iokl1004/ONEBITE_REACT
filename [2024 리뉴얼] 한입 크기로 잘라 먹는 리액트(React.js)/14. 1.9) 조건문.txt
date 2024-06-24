@@ -1,0 +1,12 @@
+14. 1.9) 조건문
+
+조건문(Conditional Statement) 이란?
+. 특정조건을 만족했을 때에만 실행되는 코드를 작성하기 위한 문법.
+. 대표적으로 if, switch 조건문이 존재함.
+
+index.html 수정!
+chapter09.js 추가!
+
+---
+
+chapter09.js

@@ -1,0 +1,74 @@
+10. 1.5) 자료형
+자료형(Type) = 집합
+
+.동일한 속성이나 특징을 가진 원소들을 묶은 것
+ex. 고양이와 강아지는 "동물" 이라는 집합으로 묶임.
+String : "Hello", "한입리액트", "장인기"
+Number : 729, 10, 950324
+
+자료형
+	원시타입
+		Number
+		String
+		Boolean
+		Null
+		Undefined
+	객체 타입
+		Object
+			Array
+			Function
+			RegexExp
+
+원시타입이란?
+. 기본형 타입이라고도 불림
+. 프로그래밍에 있어 가장 기본적인 값들의 타입을 의미함.
+
+index.html 변경!
+chapter05.js 추가
+
+---
+chapter05.js
+
+// 1. Number Type
+let num1 = 27;
+let num2 = 1.5;
+let num3 = -20;
+
+// console.log(num1 + num2);   // 더하기
+// console.log(num1 - num2);   // 빼기
+// console.log(num1 * num2);   // 곱셈
+// console.log(num1 / num2);   // 나누기
+// console.log(num1 % num2);   // 나머지
+
+let inf = Infinity;             // 양의 무한대
+let mInf = -Infinity;           // 음의 무한대
+
+let nan = NaN;                  // Number타입에 포함되며, Not a Number. 수치연산을 실패했을때 나옴.
+// console.log(1 * "hello");       // 예시.
+
+// 2. String Type
+let myName = "장인기";          // 문자열은 무조건 작은따옴표, 쌍따옴표로 생성!
+let myLocation = "등촌3동";
+let introduce = myName + myLocation;
+
+//console.log(introduce);         // 장인기등촌3동 출력!
+
+let introduceText = `${myName}은 ${myLocation}에 거주합니다.`;          // 백틱 변수를 동적으로 사용이 가능하다!
+//console.log(introduceText);
+
+// 템플릿 리터럴 문법 실무에서도 가장 자주 사용되고 유용한 문법!
+
+// 3. Boolean Type (상태를 의미함.)
+let isSwitchOn = true;
+let isEmpty = false;
+
+// 4. Null Type (아무것도 없다.)
+let empty = null;
+
+// 5. Undefined Type
+let none;
+console.log(none);
+
+// null은 개발자 즉 프로그래머가 이 변수에 어떠한 값도 없다 라는것을 표시 할때 사용.
+// Undefined는 이 변수를 미처 초기화하지 못하였구나, 존재하지 않는 값을 불러올때.
+
