@@ -1,0 +1,42 @@
+7. 1.2) VsCode 설치하기
+
+Vistual Strudio Code란?
+. Microsoft에서 개발한 오픈소스 소스코드 에디터
+. 줄여서 VSCode라고 부름
+. 2024년 현재 가장 많은 개발자들이 사용하는 에디터
+
+설치
+. 구글에 vsCode 검색 ( https://code.visualstudio.com/ )
+. 최상단의 Visual Studio Code - Code Editing. Redefined 클릭
+. Download for Windows 오른쪽의 화살표 클릭 자신의 PC에 맞는 OS의 Stable 버전 다운로드
+* Stable은 가장 안정적인 버전이라는 뜻.
+. Download 받은 파일을 클릭 하여 설치 진행.
+
+한국어 플러그인 설치 진행
+. EXTENSIONS 버튼 클릭
+. "korean" 입력
+. "Korean Language Pack for Visual Studio Code" 클릭 후, Install 버튼 클릭
+. 우측 하단에 한국어팩 설치 하였으니 다시 실행하라는 창이 나오면 다시 실행!
+
+기초 시작!
+. 문서 폴더 아래 새로운 폴더 생성
+. 생성한 폴더명은 "onebite-react"
+. VS Code로 돌아와서, 상단 메뉴의 파일(F) 버튼 클릭 후, 폴더 열기 클릭
+. 아까 생성한 경로의 "onebite-react" 폴더 열기
+. 만약 "이 폴더에 있는 파일의 작성자를 신뢰합니까?" 라는 Alert창이 나오면 "예, 작성자를 신뢰합니다." 클릭
+. 왼쪽 탐색기에 파일 "새 파일" 버튼 클릭 후, "index.js" 파일 생성!
+. console.log("Hello World"); 입력.
+
+플러그인 설치 (자동 줄맞춤 플러그인)
+. EXTENSIONS 버튼 클릭 후, Prettier - Code formatter 검색 후 설치!
+. 설치 후, VS Code에서 Ctrl + "," 입력
+. "format on save" 검색 후 Editor : Format On Save 체크!
+
+플러그인 설치 (파일의 아이콘을 직관적으로 나오게끔 하는 플러그인)
+. EXTENSIONS 버튼 클릭 후, "Material Icon Theme" 검색 후 설치!
+
+플러그인 설치 (친절한 오류메시지를 알려주는 플러그인)
+. EXTENSIONS 버튼 클릭 후, "error lens" 검색 후 설치!
+
+플러그인 설치 (라이브서버)
+. EXTENSIONS 버튼 클릭 후, "live server" 검색 후 설치!

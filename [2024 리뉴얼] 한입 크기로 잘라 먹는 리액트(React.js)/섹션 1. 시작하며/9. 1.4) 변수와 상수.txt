@@ -1,0 +1,55 @@
+9. 1.4) 변수와 상수
+
+. 변수, 상수는 값을 저장하는 박스
+"Hello", false, [1, 2. 3], 970107
+
+. section01 폴더 아래에 "chapter04.js" 파일 생성
+console.log("chapter 4");
+
+. index.html 파일로 이동 후, 아래의 소스코드 수정!
+<script src="./chapter03.js"></script> 에서
+<script src="./chapter04.js"></script>
+
+---
+
+chapter04.js
+
+// 1. 변수
+let age;         // 이렇게 선언을 하고 Console.log 할 경우 undefined 출력이 됨.
+// let age = 27;       // 변수 선언과 변수 초기화
+//console.log(age);   // 개발자 도구의 Console 화면에서 27이 출력되는것을 확인 가능함.
+
+age = 30;
+//console.log(age);   // 27 다음으로 30이 나오는것을 확인 할 수 있음.
+
+// let age = 30;    // 중복 선언이 되어 오류 발생!
+
+/*****************************************************************************/
+
+// 2. 상수 (한번 저장된 값을 변경 할 수 없음.)
+const birth = "1995.03.24";     // 상수는 선언 이후 값을 넣어 줄수 없기에 반드시 변수 초기화를 해줘야함.
+// birth = "123";                  // 오류 발생!
+
+// 3. 변수 명명규칙(네이밍 규칙)
+// 3-1. $, _ 제외한 기호는 사용할 수 없다.
+let $_name;
+
+// 3-2. 숫자로 시작할 수 없다.
+let name1;     // 문제 없음!
+// let 2name;  // 문제 있음! 정 사용하고 싶다면 $2name 혹은 _2name으로 선언!
+
+// 3-3. 예약어를 사용할 수 없다.
+// 예약어라는건? 자바스크립트가 "let" 이나 "const" 처럼 자바스크립트가 이미 특수한 의미로 사용하기로한 단어를 뜻함.
+// let let  // 문제 있음!
+// let if   // 문제 있음!
+
+// 4. 변수 명명 가이드
+// 안좋은예
+let a = 1;
+let b = 1;
+let c = a - b;
+
+// 좋은예
+let salesCount = 1;
+let refundCount = 1;
+let totalSalesCount = salesCount - refundCount;

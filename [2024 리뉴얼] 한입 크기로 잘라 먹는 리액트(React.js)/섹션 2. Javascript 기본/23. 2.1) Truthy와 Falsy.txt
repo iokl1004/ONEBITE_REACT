@@ -1,0 +1,66 @@
+23. 2.1) Truthy와 Falsy
+
+.JavaScript에서는 참, 거짓이 아닌 값도 참, 거짓으로 평가한다.
+
+if (123) {			// Truthy 한 값 (참 같은 값)
+	console.log("123 is true");
+} else {
+	console.log("123 is false");
+}
+123 is true 출력!
+
+
+if (undefined) {		// Falsy 한 값 (거짓 같은 값)
+	console.log("undefined is true");
+} else {
+	console.log("undefined is false");
+}
+undefined is false 출력!
+
+. 이를 이용하면 조건문을 간결하게 만들 수 있음.
+
+section02 폴더 생성!
+index.html 생성!
+chapter01.js 생성!
+---
+chapter01.js
+
+// 1. Falsy한 값
+let f1 = undefined;
+let f2 = null;
+let f3 = 0;
+let f4 = -0;
+let f5 = NaN;
+let f6 = "";
+let f7 = 0n;    // Big Integer 라고하며 특수한 자료형이며, 아주아주 큰 숫자를 저장하는데에 사용되는 값인데 웹개발중에는 잘 사용하지는 않음.
+
+// if(!f7){
+//     console.log("falsy");
+// }
+
+// 2. Truthy 한 값
+// -> 7가지 Falsy 한 값들 제외한 나머지 모든 값
+let t1 = "hello";
+let t2 = 123;
+let t3 = [];
+let t4 = {};
+let t5 = () => {};
+
+// if (t1) {
+//     console.log("Truthy");
+// }
+
+// 3. 활용 사례
+
+function printName(person) {
+    // if(person === undefined || person === null) {   // 복잡해짐...
+    if(!person) {   // 간결해졌다!
+        console.log("person의 값이 없음");
+        return;
+    }
+    console.log(person.name);
+}
+
+// let person;
+let person = { name : "장인기" };
+printName(person);
