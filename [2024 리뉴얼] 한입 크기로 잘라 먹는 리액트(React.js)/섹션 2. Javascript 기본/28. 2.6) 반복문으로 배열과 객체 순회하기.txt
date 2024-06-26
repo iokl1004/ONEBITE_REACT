@@ -1,0 +1,21 @@
+28. 2.6) 반복문으로 배열과 객체 순회하기
+
+순회(Iteration) 이란?
+. 배열, 객체에 저장된 여러개의 값에 순서대로 하나씩 접근하는 것을 말함.
+
+ex) 배열 순회
+let numbers = [1, 2, 3];
+
+ex) 객체 순회
+let person = {
+	name : "장인기",
+	age : 30,
+	hobby : "장인기",
+};
+
+index.html 수정!
+chapter06.js 추가!
+
+---
+
+chapter06.js
