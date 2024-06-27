@@ -1,0 +1,78 @@
+40. 3.4) Node.js 모듈 시스템 이해하기
+
+모듈 시스템이란? 모듈을 다루는 시스템!
+그렇다면 모듈이란?
+예) 온라인 쇼핑몰을 만들어야 한다면 회원 관리 기능, 장바구니 기능, 결제 기능 등등등이 있을 텐데, 이런 복잡한 파일을 하나의 파일에 다 작성하게 되면 엄청 긴 코드가 발생하게 되며, 버그가 발생하게 되면 내가 수정을 해야하는곳을 엄청 찾아가야함...
+그래서! 회원 관리 기능은 user.js, 장바구니 기능은 cart.js, 결제 기능은 payment.js에 코드를 작성하면 된다! 이렇듯 이런 js파일을들 우리는 "모듈" 이라고 부른다!
+user.js는 user모듈, cart.js는 cart모듈, payment.js는 payment모듈
+
+모듈을 생성하고, 불러오고, 사용하는 등의 모듈을 다루는 다양한 기능을 제공하는 시스템을 모듈 시스템이라 부른다.
+
+Common Js(CJS), ES Module (ESM) 이 두개의 자바스크립 모듈 시스템을 알아보자!
+
+ES Module을 사용하려면 package.json 파일에서 
+"license" : "ISC" 밑에다가 아래의 구문을 추가한다!
+"type" : "module" // ES 모듈시스템을 사용하겠다 선언!
+
+하지만, ES Module 시스템과 Common Js(CJS)를 같이 사용할 수 없음...
+
+---
+
+index.js
+
+//console.log("안녕 Node.js");
+
+// const moduleData = require("./math");
+
+//console.log(moduleData.add(1, 2));
+//console.log(moduleData.sub(1, 2));
+
+// COMMON JS 방식
+// const { add, sub } = require("./math");
+// console.log(add(1, 2));
+// console.log(sub(1, 2));
+
+// ES Module 방식
+// ※ 파일의 확장자까지 다 기재를 해줘야함!!
+import mul, { add, sub } from "./math.js";
+console.log(add(1, 2));
+console.log(sub(1, 2));
+console.log(mul(2, 3));
+
+---
+
+math.js
+
+// math 모듈
+
+// function add(a, b) {
+//     return a + b;
+// }
+
+// function sub(a, b) {
+//     return a - b;
+// }
+
+// COMMON JS 방식
+// module.exports = {
+//     // add : add,
+//     // sub : sub,
+//     add,    // 키값과 동일할 경우 이렇게만 작성해도 된다!
+//     sub,
+// }
+
+// ES Module 방식
+export function add(a, b) {
+    return a + b;
+}
+
+export function sub(a, b) {
+    return a - b;
+}
+
+// 위에 구문에서 export만 지우고 아래 것 주석 해도 됨!
+// export { add, sub };
+
+export default function multiply(a, b) {
+    return a * b;
+}

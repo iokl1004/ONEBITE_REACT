@@ -1,0 +1,11 @@
+38. 3.2) Node.js 설치하기
+
+1. 구글에 Node JS 검색!
+2. Node Js홈페이지에 가운데에 LTS버전과 Current 버튼이 있는데,
+LTS 버전은 현재 가장 안정적인 버전! (Long Term Support)
+Current는 가장 최신버전!
+3. LTS 버전 다운로드 후 설치!
+4. 설치가 제대로 되었는지 확인 하기 위해 cmd창 Open 하여, "node -v" 입력 후 Enter를 한 다음에 버전이 나오면 설치 완료!
+5. npm도 제대로 설치 되었는지 확인! (npm : Node Package Manager, node Js의 프로젝트 단위인 패키지를 관리하는 도구이며, 새로운 패키지를 생성 한다던가, 삭제한다던가 유용한 기능을 제공함!)
+6. cmd창 Open 후, "npm -v" 입력 후 Enter 한 다음에 버전이 나오면 설치 완료!
+
