@@ -1,0 +1,46 @@
+45. 5.1) 실습 준비하기
+
+1. ONBITE-REACT 폴더 열기
+2. 터미널 (Ctrl+J) npm create vite@latest Enter
+3. Project name : section05
+Select a framework : React
+Select a variant : JavaScript
+4. section05 폴더 열기
+5. 디펜던시 다운로드를 위해 터미널 (Ctrl+J) npm i
+6. React 앱 가동을 위해 터미널 (Ctrl+J) npm run dev
+
+---
+
+생성한 파일들중에 불필요한 파일 삭제!
+
+1. src/App.jsx 아래 구문 삭제
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+
+2. src/assets/react.svg 파일 삭제!
+
+3. public/vite.svg 파일 삭제
+
+4. src/App.jsx 아래 구문 삭제
+const [count, setCount] = useState(0);
+import { useState } from "react";
+
+5. App.jsx 아래 구문 삭제
+<div> </div> 내에 있는 구문 전원 삭제
+
+6. App.css 구문들 전원 삭제
+
+7. index.css 구문들 전원 삭제
+
+8. main.jsx 파일안에 있는 render 메서드 안에 있는 <React.StrictMode> 태그 전부 삭제
+개발모드로 리액트를 실행하고 있을때 우리가 작성한 코드에 혹시나 잠재적인 문제가 있는지
+내부적으로 검사 해주는 도구이다. 실습에서는 별로 필요하지도 않고, 몇몇 입문자들에게는 혼란을 야기 할 수 있으니 삭제!
+
+9. VS Code의 Extention 접속하여서 "EXLint" 라는 확장 프로그램 설치!
+. 우리가 작성하는 코드를 정적으로 검사하여서 혹시나 오류가 발생한만한 코드가 있으면 경고를 띄워주는 프로그램이다.
+
+10. 파일 탐색기의 .eslintrc.cjs 파일 eslint의 옵션을 설정 해줄수 있는 파일이다.
+rules 문자열 끝나는 지점에 아래의 구문 추가!
+"no-unused-vars": "off",	// 코드상에 실제로 사용하지 않는 변수가 있을때 오류로 알려주는 기능인데 옵션을 끈다!
+"react/prop-types": "off",	// 나중에 리액트를 다 배우고 나서 좀더 안전하게 사용하게 해주는 옵션인데, 실습중에는 불편하게 하므로 끈다!
+

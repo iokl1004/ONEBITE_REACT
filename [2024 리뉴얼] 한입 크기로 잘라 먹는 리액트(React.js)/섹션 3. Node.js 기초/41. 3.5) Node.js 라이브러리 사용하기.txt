@@ -1,0 +1,29 @@
+41. 3.5) Node.js 라이브러리 사용하기
+
+라이브러리란? 프로그램을 개발할 때 필요한 다양한 기능들을 미리 만들어 모듈화 해 놓은것.
+예) 날짜 라이브러리, 수학 라이브러리, 그래픽 라이브러리
+
+라이브러리를 다운로드 받기 위해
+구글에 npm js 검색 후, 사이트 접속! 해당 사이트는 npm 라이브러리의 백화점이라고 보면됨!
+
+간단한 라이브러리인 "randomcolor" 검색 후 설치해보기!
+section3폴더의 터미널에 "npm i randomcolor" 입력 후 Enter!
+설치가 다 끝났다면 package.json 파일을 확인해보는데, 아래의 구문이 추가 된것을 확인 할 수 있다!
+이 프로젝트는 이 라이브러리가 의존되어 있으므로, 동작 할 수 있다!
+  "dependencies": {
+    "randomcolor": "^0.6.2"
+  }
+
+node_modules 라는 폴더가 생겼는데, 실제로 설치된 라이브러리의 저장소다! 라고 생각하면 되며,
+package-lock.json파일은 이 패키지가 사용하고 있는 라이브러리들의 버전이나 정보를 이 Package-json 파일보다 더 엄밀하고 정밀한 파일이다!
+
+package.json 파일에 "randomcolor": "^0.6.2" 앞에 ^는 버전 레인지(Version Range)라고 하여 대략적인 버전이라고 보면된다!
+
+node_modules 폴더와 package-lock.json 파일을 지우게 되면, randomColor 라이브러리를 사용할 수 가 없게되는데,
+이럴경우 다시 설치를 하면된다!
+터미널에 "npm i" 입력 후 Enter를 하면 다운로드를 받을수 있다!
+어떻게 자동적으로 다운로드 받게 되냐면 package.json 파일의 dependencies의 정보를 기준으로 모든 패키지, 모든 라이브러리를 다운받을수가있다!
+  "dependencies": {
+    "randomcolor": "^0.6.2"
+  }
+

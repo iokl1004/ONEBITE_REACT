@@ -1,0 +1,68 @@
+46. 5.2) React 컴포넌트
+
+src폴더 아래에 components 폴더를 생성하여서 Footer.jsx, Header.jsx, Main.jsx 파일을 생성한다!
+
+Footer.jsx
+
+const Footer = () => {
+    return (
+        <footer>
+            <h1>footer</h1>
+        </footer>
+    );
+};
+
+export default Footer;
+
+---
+Header.jsx
+
+// Header Component
+// function Header() {
+
+// 애로우 펑션 으로도 만들 수 있다!
+const Header = () => {
+    return (
+      <header>
+        <h1>header</h1>
+      </header>
+    );
+  };
+
+  // Header components를 내보낸다!
+  export default Header;
+
+---
+Main.jsx
+
+const Main = () => {
+    return (
+        <main>
+            <h1>main</h1>
+        </main>
+    );
+};
+
+export default Main;
+
+---
+App.jsx
+
+import './App.css'
+import Header from "./components/Header.jsx"; // .jsx 를 삭제해도 된다!
+import Main from "./components/Main.jsx";
+import Footer from './components/Footer.jsx';
+
+// App Component
+// Root 컴포넌트 라고 불리며, 안에 있는 컴포넌트들은 자식 컴포넌트라고 한다.
+function App() {
+  return (
+    <>
+      <Header />
+      <Main />
+      <Footer />
+    </>
+  )
+}
+
+export default App;

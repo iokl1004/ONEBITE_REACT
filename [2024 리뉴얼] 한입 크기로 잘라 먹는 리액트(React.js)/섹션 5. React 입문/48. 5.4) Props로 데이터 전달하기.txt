@@ -1,0 +1,71 @@
+48. 5.4) Props로 데이터 전달하기
+Props란? 부모컴포넌트가 자식컴포넌트에게 전달하는 값을 Properties의 줄임말인 Props라고 한다!
+
+---
+src/components 폴더 안에 Button.jsx 파일 생성
+Button.jsx
+
+// 구조분해 할당으로 받아올수도 있다!
+const Button = ({ text, color, children }) => {
+    return (
+        <button style={{ color : color }}>
+            {text} - {color.toUpperCase()}
+            {children}
+        </button>
+    );
+};
+
+// const Button = (props) => {
+//     console.log(props);
+//     return (
+//         <button style={{ color : props.color }}>
+//             {props.text} - {props.color.toUpperCase()}
+//         </button>
+//     );
+// };
+
+// Props의 기본값 설정!
+Button.defaultProps = {
+    color: "black",
+};
+
+export default Button;
+
+---
+App.jsx
+
+import './App.css'
+import Header from "./components/Header.jsx"; // .jsx 를 삭제해도 된다!
+import Main from "./components/Main.jsx";
+import Footer from './components/Footer.jsx';
+import Button from "./components/Button.jsx";
+
+// App Component
+// Root 컴포넌트 라고 불리며, 안에 있는 컴포넌트들은 자식 컴포넌트라고 한다.
+function App() {
+
+  const buttonProps = {
+    text : "메일",
+    color: "red",
+    a:1,
+    b:2,
+    c:3,
+    };
+  return (
+    <>
+      {/* <Header />
+      <Main />
+      <Footer /> */}
+      {/* 스프레드 연산자로 넘겨 줄수도 있다! */}
+      <Button {...buttonProps} />
+      <Button text = {"메일"} color = {"red"}/>
+      <Button text = {"카페"} />
+      <Button text = {"블로그"}>
+        <Header />
+        <div>자식요소</div>
+      </Button>
+    </>
+  )
+}
+
+export default App;

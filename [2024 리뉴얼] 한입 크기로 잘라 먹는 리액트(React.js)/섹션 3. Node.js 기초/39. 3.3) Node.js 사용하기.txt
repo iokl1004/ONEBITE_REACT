@@ -1,0 +1,31 @@
+39. 3.3) Node.js 사용하기
+패키지? Node.js에서 사용하는 프로그램의 단위
+예) 쇼핑몰 패키지, 웹 포털 패키지
+
+노드패키지를 생성하려면 가장먼저 해줘야하는 일이 바로 패키지의 루트폴더! 즉, 패키지의 뿌리폴더를 하나 생성해줘야함.
+
+onebite-react 폴더 내에 section03 폴더 생성!
+VSCode 다시 Open을 하고, 파일(F) > 폴더열기 > section03
+
+그리고 터미널 열기! (Ctrl +J)
+
+새로운 패키지를 초기화 해달라 생성해달라라는 npm init 명령어를 터미널에 입력!
+
+※ 만약에 "npm : 'npm' 용어가 cmdlet,......" 이런 에러가 발생하였더라면, 
+※ VSCode의 기본 터미널이 powershell로 설정되어 있기 때문에 오류가 발생한것이다!
+※ 이럴때는, VSCode의 기본 터미널의 종류를 바꿔주면 해결 가능하며
+※ Ctrl + Shift + p를 눌러서 "terminal: select default profile" 입력 후, "Command Prompt" 클릭 후, 터미널을 닫았다가 다시 실행하거나, VS Code를 재실행 후, npm init을 하면된다!
+
+Enter의 연속 후,,, "package.json" 파일이 생성된것을 확인 할 수 있다!
+
+vscode에서 index.js 파일생성 후,
+해당 파일에 console.log("안녕 Node.js"); 입력!
+그리고 터미널에 node index.js 입력 하면 터미널에 "안녕 Node.js" 가 출력된다!
+
+만약 src 폴더 생성 후, 해당 폴더에 index.js를 넣고 node index를 입력하면 경로를 찾을수 없다고 함!
+그래서 node src/index.js 터미널에 입력 후 Enter를 하면 나온다!
+
+그래서 package.json 파일에 "test" 밑에
+"start" : "node src/index.js"
+입력 후, 저장 하고 터미널에서 npm run start 를 입력해주면!
+"안녕 Node.js" 가 출력이 된다!

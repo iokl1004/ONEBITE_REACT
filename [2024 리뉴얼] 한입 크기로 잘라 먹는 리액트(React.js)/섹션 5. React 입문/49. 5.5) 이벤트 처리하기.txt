@@ -1,0 +1,49 @@
+49. 5.5) 이벤트 처리하기
+
+이벤트 핸들링이란?
+Event Handling : 이벤트가 발생했을 때 그것을 처리하는 것
+ex) 버튼 클릭시 경고창 노출
+
+Event : 웹 내부에서 발생하는 사용자의 행동
+EX) 버튼 클릭, 메세지 입력, 스크롤 등등
+
+Handling : 다루다, 취급하다, 처리하다
+
+    const onClickButton = (e) => {
+        console.log(e);
+        console.log(text);
+    };
+SyntheticBaseEvent란? 출력된 합성이벤트 객체 라고 하며, 모든 브라우저에서 사용 될 수 있는 통합된 이벤트 객체이다!
+
+---
+
+Button.jsx 수정
+
+// 구조분해 할당으로 받아올수도 있다!
+const Button = ({ text, color, children }) => {
+    // 이벤트 객체
+    const onClickButton = (e) => {
+        console.log(e);
+        console.log(text);
+    };
+
+    return (
+        <button
+        // 마우스 클릭 이벤트!
+        onClick={onClickButton}
+
+        // 마우스를 올렸을때 이벤트!
+        // onMouseEnter = {onClickButton}
+        style={{ color : color }}>
+            {text} - {color.toUpperCase()}
+            {children}
+        </button>
+    );
+};
+
+// Props의 기본값 설정!
+Button.defaultProps = {
+    color: "black",
+};
+
+export default Button;

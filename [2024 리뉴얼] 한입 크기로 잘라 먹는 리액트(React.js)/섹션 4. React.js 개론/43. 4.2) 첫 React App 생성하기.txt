@@ -1,0 +1,46 @@
+43. 4.2) 첫 React App 생성하기
+React로 만든 웹 서비스들은
+보통 React App, React Application 이라고 불린다!
+
+Vite 라는 차세대 프론트엔드 개발 툴 이며, 기본 설정이 적용된 React App 생성이 가능!
+
+1. ONEBITE-REACT 폴더 Open
+2. 터미널에 npm create vite@latest 를 이용하여 설치!
+3. 설치를 진행하냐고 묻는다면 당연히 y 입력 후 Enter
+4. Project name은 section04
+5. Select a framework는 React
+6. Select a variant는 JavaScript
+7. "Done. Now run" 이 나오면 성공!
+
+react 또한, nodejs 패키지이므로, package.json 이라는 파일이 있는 것을 확인 할 수 있음.
+지금 파일 탐색기를 보면 node_Modules나 package-lcok.json이 없는것을 확인 할 수 있는데, 아직 설치가 덜 된것이다.
+이런 경우, 터미널 (Ctrl+j)를 눌러서 "npm i" Enter!
+
+.public 폴더 : svg, img, font 같은 정적인 파일들의 저장소이다!
+.src 폴더 : Soruce의 약자로, 리액트나 자바스크립트 코드들의 저장소이다!
+-.JSX?React 코드가 작성되는 공간이라고 생각하면됨.
+.eslintrc.cjs : 개발자들 사이에 코드 스타일을 통일하는데 도움을 주는 도구이다.
+.gitignore : git허브에 올릴때 올리면 안되는 파일을 명시
+.index.html : React 앱의 기본틀 역할을 하는 화면이다.
+.vite.config.js : Vite라는 도구의 옵션을 설정을 할 수 있다.
+
+터미널 (Ctrl+j)에서 npm run dev Enter를 하면
+dev라는 명령어가 리액트 앱을 개발용으로 실행 시켜볼 수 있는 명령어 이다!
+실행을 하면 VITE가 리액트를 작동 할 수 있게 해준다!
+
+  VITE v5.3.2  ready in 206 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+
+  press r + enter to restart the server
+	서버 재시작
+  press u + enter to show server url
+	서버의 주소를 다시 보여준다
+  press o + enter to open in browser
+	브라우저에서 자동으로 이 주소로 접근하게 해준다.
+  press c + enter to clear console
+	콘솔화면 클리어
+  press q + enter to quit
+	종료
