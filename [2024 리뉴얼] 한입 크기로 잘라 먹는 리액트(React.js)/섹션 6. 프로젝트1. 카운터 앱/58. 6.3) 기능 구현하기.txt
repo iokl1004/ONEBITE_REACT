@@ -1,0 +1,17 @@
+58. 6.3) 기능 구현하기
+
+State라는건 컴포넌트 내부에서 만들어줘야함 그렇담 이 State를 어디에서 만들어 줘야하나?
+1. Viewer Component
+2. Controller Component
+3. App Component
+
+정답은 3. App component
+왜냐하면 Viewer 컴포넌트와 Controller 컴포넌트는 서로 부모 자식 관계를 가지지 않아서 공유할 방법이 없음!
+
+counter App의 컴포넌트 계층 구조
+			   <App/>
+<Viewer/>				<Controller/>
+
+부모에서 자식 방향으로만 데이터를 전달 할 수가 있음.
+마치, 일방통행 차선 처럼...!
+= 단방향 데이터 흐름

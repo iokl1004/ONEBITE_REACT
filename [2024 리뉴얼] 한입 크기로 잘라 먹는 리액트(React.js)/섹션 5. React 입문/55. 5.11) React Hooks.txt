@@ -1,0 +1,84 @@
+55. 5.11) React Hooks
+React Hooks란? 클래스 컴포넌트의 기능을 함수 컴포넌트에서도 이용할 수 있도록 도와주는 메서드들을 말함.
+
+2017년도 이전의 React.js
+Class 컴포넌트 : 모든 기능을 이용할 수 있음
+Function 컴포넌트 : UI 렌더링만 할 수 있음.
+
+Hook은 낚아채다!
+
+React Hooks
+useState : State 기능을 낚아 채오는 Hook.
+useRef : Reference 기능을 낚아 채오는 Hook.
+
+components 폴더 아래에 HookExam.jsx 파일 생성!
+src 폴더 아래에 hooks 폴더 생성 후, useInput.jsx 파일 생성!
+
+---
+HookExam.jsx
+
+import { useState } from "react";
+import useInput from "../hooks/useInput";
+
+// 3가지 hook 관련된 팁
+// 1. 함수 컴포넌트, 커스텀 훅 내부에서만 호출 가능.
+// 2. 조건부로 호출될 수는 없다.
+// 3. 나만의 훅(Custom Hook) 직접 만들 수 있다.
+
+// 오류 발생! 반드시 함수 컴포넌트 내부에서만 사용이 가능함!
+// const state = useState();
+
+// Custom 훅 앞에 use을 붙히면 됨!
+// function useInput() {
+//     const [input, setInput] = useState("");
+
+//     const onChange = (e) => {
+//         setInput(e.target.value);
+//     };
+
+//     return [input, onChange];
+// }
+
+const HookExam = () => {
+    // // 조건문이나 반복문으로 쓰일수 없다!
+    // // 왜? 서로다른 훅들의 호출순서가 엉망이 되어버린 현상이 발생되어서 내부적인 오류가 발생할 수 있음.
+    // if(true) {
+    //     const state = useState();
+    // }
+
+    // // 조건문이나 반복문으로 쓰일수 없다!
+    // // 왜? 서로다른 훅들의 호출순서가 엉망이 되어버린 현상이 발생되어서 내부적인 오류가 발생할 수 있음.
+    // for(;;) {
+    //     //
+    // }
+
+    const [input, onChange] = useInput();
+    const [input2, onChange2] = useInput();
+
+    return (
+        <div>
+            <input value={input} onChange={onChange} />
+            <input value={input2} onChange={onChange2} />
+        </div>
+    );
+};
+
+export default HookExam;
+
+---
+useInput.jsx
+
+// 55. 5.11) React Hooks 예제
+import { useState } from "react";
+
+function useInput() {
+    const [input, setInput] = useState("");
+
+    const onChange = (e) => {
+        setInput(e.target.value);
+    };
+
+    return [input, onChange];
+}
+
+export default useInput;

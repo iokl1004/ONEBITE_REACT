@@ -1,0 +1,78 @@
+57.6.2) UI 구현하기
+src/components 폴더 생성
+Controller.jsx 파일 생성
+Viewer.jsx 파일 생성
+
+---
+App.jsx
+
+import './App.css'
+import Viewer from './components/Viewer'
+import Controller from './components/Contorller'
+
+function App() {
+  return (
+    <div className ="App">
+      <h1>Simple Counter</h1>
+      <section>
+        <Viewer />
+      </section>
+      <section>
+        <Controller />
+      </section>
+    </div>
+  )
+}
+
+export default App
+
+---
+components/Controller.jsx
+
+const Controller = () => {
+    return (
+        <div>
+            <button>-1</button>
+            <button>-10</button>
+            <button>-100</button>
+            <button>+100</button>
+            <button>+10</button>
+            <button>+1</button>
+        </div>
+    );
+};
+
+export default Controller;
+
+---
+components/Viewer.jsx
+
+const Viewer = () => {
+    return (
+    <div>
+        <div>현재 카운트 :</div>
+        <h1>0</h1>
+    </div>
+    );
+}
+
+export default Viewer;
+
+---
+App.css
+
+body {
+  padding : 20px;                           /* 내부 여백                */
+}
+
+.App {
+  margin : 0 auto;                          /* 화면상의 남는 요소를 maring으로 하여서 가운대로 배치하게끔 해줌.*/
+  width: 400px;                             /* 너비    */
+}
+.App > section {
+  background-color: rgb(245, 245, 245);   /*  연한 회색              */
+  border : 1px solid rgb(240, 240, 240);  /*  직선                   */
+  border-radius: 5px;                       /* 5px 정도 모서리를 둥글게! */
+  padding : 20px;                           /* 내부여백                 */
+  margin-bottom : 10px;                     /* 아랫방향의 외부 여백      */
+};

@@ -1,0 +1,106 @@
+53. 5.9) State로 사용자 입력 관리하기2
+
+1. 스테이트 통합!
+2. 통합 이벤트 핸들러
+
+---
+
+Register.jsx
+
+import { useState } from "react";
+// 간단한 회원가입 폼
+// 1. 이름
+// 2. 생년월일
+// 3. 국적
+// 4. 자기소개
+
+const Register = () => {
+
+    // 비슷한 여러개의 스테이트가 있을 경우, 하나의 객체값으로 묶어서 하나의 스테이트로 통합하여 관리하면 편하다.
+    const [input, setInput] = useState({
+        name: "",
+        birth: "",
+        country: "",
+        bio: "",
+    });
+
+    // 여러개의 비슷한 이벤트 핸들러가 있을 경우, 이렇게 통합 이벤트 핸들러로 묶어줄수가 있다.
+    const onChange = (e) => {
+        console.log(e.target.name, e.target.value);
+        setInput({
+            ...input,
+            [e.target.name] : e.target.value,   // name속성 : 
+        })
+    }
+
+    // const onChangeName = (e) => {
+    //     setInput({
+    //         ...input,
+    //         name : e.target.value
+    //     });
+    // };
+
+    // const onChangeBirth = (e) => {
+    //     setInput({
+    //         ...input,
+    //         birth : e.target.value
+    //     });
+    // }
+
+    // const onChangeCountry = (e) => {
+    //     setInput({
+    //         ...input,
+    //         country : e.target.value
+    //     });
+    // }
+
+    // const onChangeBio = (e) => {
+    //     setInput({
+    //         ...input,
+    //         bio : e.target.value
+    //     });
+    // }
+
+    return (
+        <div>
+            <div>
+                <input
+                    name = "name"
+                    value={input.name}
+                    onChange={onChange}
+                    placeholder={"이름"}
+                />
+                {input.name}
+            </div>
+            <div>
+                <input 
+                    name = "birth"
+                    value={input.birth}
+                    onChange={onChange}
+                    type="date"
+                />
+                {input.birth}
+            </div>
+            <div>
+                <select name="country" value={input.country} onChange={onChange}>
+                    <option></option>
+                    <option value="kr">한국</option>
+                    <option value="us">미국</option>
+                    <option value="uk">영국</option>
+                </select>
+                {input.country}
+            </div>
+
+            <div>
+                <textarea
+                    name="bio"
+                    value={input.bio}
+                    onChange={onChange}
+                />
+                {input.bio}
+            </div>
+        </div>
+    );
+};
+
+export default Register;

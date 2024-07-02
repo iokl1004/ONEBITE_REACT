@@ -1,0 +1,39 @@
+56. 6.1) 프로젝트 소개 및 준비
+
+Simple Counter
+
+<Viewer />
+현재카운트 :
+0
+
+<Controller />
+-1	-10	-100	+100	+10	+1
+
+---
+
+프로젝트 사전 준비
+
+1. 폴더 열기 > ONEBITE_REACT
+2. 터미널(Ctrl + J) npm create vite@latest
+3. Project name : section06
+4. framework : React
+5. variant : JavaScript
+6. 폴더열기 > section06
+7. package.json에서 dependencies 설치를 위해 터미널에서 npm i
+8. 다운로드가 완료 되면, 터미널에서 npm run dev
+9. .eslintrc 파일 맨 아래의 rules의 배열이 끝나는 곳에 아래의 구문 추가
+    "no-unused-vars":"off",
+    "react/prop-types":"off",
+10. 불필요한 파일 삭제
+. public/vite.svg
+. src/assets/react.svg
+. App.jsx 파일의 return문 안에 있는 내용 전부 삭제!
+
+. App.jsx 파일의 import문 3개 삭제!
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+
+.App.css 내용 전부 삭제
+.index.css 내용 전부 삭제
+.main.jsx   </React.StrictMode> 삭제
