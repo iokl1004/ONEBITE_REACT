@@ -1,0 +1,31 @@
+.Editor {
+    display : flex;
+    gap : 10px;
+}
+
+.Editor input {
+    /* input 태그가 부모요소의 크기를 벗어나지 않는 선에서 최대한 늘어남! */
+    flex : 1;
+
+    /* 테두리 내부 여백*/
+    padding : 15px;
+
+    border : 1px solid rgb(220, 220, 220);
+    border-radius : 5px;
+}
+
+.Editor button {
+    /* 마우스 커서를 올리면 마우스가 포인터 모양으로 변함!      */
+    cursor: pointer;
+
+    width:80px;
+    border: none;
+    background-color: rgb(37, 147, 255);
+    color: white;
+    border-radius: 5px;
+}
+
+.Editor > input:focus {
+    outline : none;
+    border: 2px solid rgb(37, 147, 255);
+}

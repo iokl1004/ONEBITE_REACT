@@ -1,0 +1,47 @@
+65. 8.3) 기능 구현 준비하기
+
+App.jsx 수정 후, 지난시간에 설치 하엿던 React Developer로 state 확인하기!
+
+---
+App.jsx
+
+import './App.css'
+import { useState } from 'react'
+import Header from './components/Header'
+import Editor from './components/Editor'
+import List from './components/List'
+
+function App() {
+  const mockData = [
+    {
+      id : 0,
+      isDone : false,
+      content : "React 공부하기",
+      date : new Date().getTime(),
+    },
+    {
+      id : 1,
+      isDone : false,
+      content : "영화 감상하기",
+      date : new Date().getTime(),
+    },
+    {
+      id : 2,
+      isDone : false,
+      content : "볼링",
+      date : new Date().getTime(),
+    },
+  ];
+
+  const [todos, setTodos] = useState(mockData);
+
+  return (
+   <div className="App">
+      <Header />
+      <Editor />
+      <List />
+    </div>
+  )
+}
+
+export default App;

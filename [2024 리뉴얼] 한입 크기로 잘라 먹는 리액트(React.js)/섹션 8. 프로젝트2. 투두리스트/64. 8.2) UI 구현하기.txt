@@ -1,0 +1,144 @@
+64. 8.2) UI 구현하기
+
+src/components 폴더 생성!
+src/components/Header.jsx 파일 생성!
+src/components/Editor.jsx 파일 생성!
+src/components/List.jsx 파일 생성!
+src/components/TodoItem.jsx 파일 생성!
+src/components/Header.css 파일 생성!
+src/components/Editor.css 파일 생성!
+src/components/List.css 파일 생성!
+
+---
+Header.jsx
+
+import "./Header.css"
+const Header = () => {
+    return (
+        <div className="Header">
+            <h3>오늘은 🚗</h3>
+            <h1>{new Date().toDateString()}</h1>
+        </div>
+    );
+};
+
+export default Header;
+
+---
+Editor.jsx
+
+import "./Editor.css";
+
+const Editor = () => {
+    return (
+        <div className="Editor">
+            <input placeholder="새로운 Todo..."/>
+            <button>추가</button>
+        </div>
+    );
+};
+
+export default Editor;
+
+---
+List.jsx
+
+import "./List.css"
+import TodoItem from "./TodoItem";
+
+const List = () => {
+    return (
+        <div className="List">
+            <h4>Todo List 👌</h4>
+            <input placeholder="검색어를 입력하세요" />
+            <div className="todos_wrapper">
+                <TodoItem />
+                <TodoItem />
+                <TodoItem />
+            </div>
+        </div>
+    );
+};
+
+export default List;
+
+---
+TodoItem.jsx
+
+import "./TodoItem.css";
+
+const TodoItem = () => {
+    return (
+        <div className="TodoItem">
+            <input type="checkbox" />
+            <div className="content">Todo...</div>
+            <div className="date">Date</div>
+            <button>삭제</button>
+        </div>
+    );
+};
+
+export default TodoItem;
+
+---
+Header.css
+
+.Header > h1 {
+    color : rgb(37, 147, 255);
+}
+
+---
+Editor.css
+
+.Editor {
+    display : flex;
+    gap : 10px;
+}
+
+.Editor input {
+    /* input 태그가 부모요소의 크기를 벗어나지 않는 선에서 최대한 늘어남! */
+    flex : 1;
+
+    /* 테두리 내부 여백*/
+    padding : 15px;
+
+    border : 1px solid rgb(220, 220, 220);
+    border-radius : 5px;
+}
+
+.Editor button {
+    /* 마우스 커서를 올리면 마우스가 포인터 모양으로 변함!      */
+    cursor: pointer;
+
+    width:80px;
+    border: none;
+    background-color: rgb(37, 147, 255);
+    color: white;
+    border-radius: 5px;
+}
+---
+List.css
+
+.List {
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.List > input {
+    width : 100%;
+    border : none;
+    border-bottom : 1px solid rgb(220, 220, 220);
+    padding : 15px 0px;
+}
+
+.List > input:focus {
+    outline : none;
+    border-bottom: 1px solid rgb(37, 147, 255);
+}
+
+.List .todos_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap : 20px;
+}
