@@ -1,8 +1,14 @@
+67. 8.5) Read - 투두리스트 렌더링하기
+
+List.jsx 수정
+---
+List.jsx
+
 import "./List.css"
 import TodoItem from "./TodoItem";
 import { useState } from "react";
 
-const List = ( {todos, onUpdate, onDelete} ) => {
+const List = ( {todos} ) => {
     const [search, setSearch] = useState("");
 
     const onChangeSearch = (e) => {
@@ -30,14 +36,7 @@ const List = ( {todos, onUpdate, onDelete} ) => {
             />
             <div className="todos_wrapper">
                 {filteredTodos.map((todo)=>{
-                    return (
-                        <TodoItem
-                            key = {todo.id}
-                            {...todo}
-                            onUpdate = {onUpdate}
-                            onDelete = {onDelete}
-                        />
-                    );
+                    return <TodoItem key = {todo.id} {...todo} />;
                 })}
             </div>
         </div>
