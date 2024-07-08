@@ -1,0 +1,14 @@
+.App{
+  width : 500px;
+  margin : 0 auto;
+
+  /* App이라는 클래스네임을 갖는 요소 밑에 갖는       */
+  /* 자식 요소들의 배치를 좀더 유연하게 도와주는 속성  */
+  display: flex;
+  
+  /* flex의 방향!         */
+  flex-direction: column;
+  
+  /* 요소들의 간격         */
+  gap : 10px;
+}

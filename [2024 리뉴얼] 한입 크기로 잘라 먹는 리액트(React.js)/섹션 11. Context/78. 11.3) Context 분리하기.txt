@@ -1,0 +1,309 @@
+78. 11.3) Context 분리하기
+
+. 최적화가 풀리는 문제가 확인되었음!
+. 왜 문제가 발생했을까?
+Props가 변경되면 리렌더링이 된다.
+
+. 어떻게 해결하나요?!
+
+					TodoContext
+TodoStateContext						TodoDispatchContext
+변경될 수 있는 값
+	todos
+
+App.jsx 수정
+List.jsx 수정
+TodoItem.jsx 수정
+Editor.jsx 수정
+
+useMemo를 사용한 이유 
+---
+
+App.jsx
+
+import './App.css'
+import { useState, useRef, useReducer, useCallback, createContext, useMemo } from 'react'
+import Header from './components/Header'
+import Editor from './components/Editor'
+import List from './components/List'
+
+const mockData = [
+  {
+    id : 0,
+    isDone : false,
+    content : "React 공부하기",
+    date : new Date().getTime(),
+  },
+  {
+    id : 1,
+    isDone : false,
+    content : "영화 감상하기",
+    date : new Date().getTime(),
+  },
+  {
+    id : 2,
+    isDone : false,
+    content : "볼링",
+    date : new Date().getTime(),
+  },
+];
+
+function reducer(state, action) {
+  switch(action.type) {
+    case 'CREATE' : return [action.data, ...state]
+    case 'UPDATE' : return state.map((item) => item.id === action.targetId? {...item, isDone: !item.isDone} : item);
+    case 'DELETE' : return state.filter((item)=>item.id !== action.targetId)
+    default : return state;
+  }
+}
+
+// Context 객체는 컴포넌트 외부에 선언 한다! 왜냐하면 내부에 선언하면 App.js가 리렌더링 될때마다 다시 생성될 필요는 없으니!
+// export const TodoContext = createContext();
+
+// 최적화가 풀리는 현상이 존재하여서 아래 코드로 수정!
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
+
+function App() {
+  
+  const [todos, dispatch] = useReducer(reducer, mockData);
+  const idRef = useRef(3);
+
+  // 아이템 추가 (useCallback 이용)
+  const onCreate = useCallback((content) =>{
+    dispatch({
+      type : "CREATE",
+      data : {
+        id : idRef.current++,
+        isDone : false,
+        content : content,
+        date : new Date().getTime(),
+      },
+    });
+  }, []);
+
+  // 아이템 수정 (useCallback 이용)
+  const onUpdate = useCallback((targetId) => {
+    dispatch({
+      type: "UPDATE",
+      targetId: targetId,
+    });
+  }, [])
+
+
+  // 아이템 삭제 (useCallback 이용)
+  const onDelete = useCallback((targetId) => {
+    dispatch({
+      type : "DELETE",
+      targetId : targetId,
+    });
+  }, []);
+
+  // onCrea, upDate, Delete 함수를 묶어주는 개체를 다시는 생성하지 않도록 만들어 주기 위해
+  const memoizedDispatch = useMemo(()=> {
+    return { onCreate, onUpdate, onDelete };
+  }, []);
+
+  return (
+   <div className="App">
+      {/* <Exam /> */}
+      <Header />
+      {/* <TodoContext.Provider value={{todos, onCreate, onUpdate, onDelete,}}> */}
+      <TodoStateContext.Provider value = {todos} >
+        <TodoDispatchContext.Provider value = {memoizedDispatch}>
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
+        {/* </TodoContext.Provider> */}
+    </div>
+  )
+}
+
+export default App;
+
+---
+List.jsx
+
+import "./List.css"
+import TodoItem from "./TodoItem";
+import { useState, useMemo, useContext } from "react";
+import { TodoStateContext } from "../App";
+
+const List = (  ) => {
+    const todos = useContext(TodoStateContext);
+
+    const [search, setSearch] = useState("");
+
+    const onChangeSearch = (e) => {
+        setSearch(e.target.value);
+    };
+
+    const getFilteredDate = () => {
+        if(search === "") {
+            return todos;
+        }
+        return todos.filter((todo) =>
+            todo.content.toLowerCase().includes(search.toLocaleLowerCase())   // includes 인수로 전달한 값이 todo.content에 보관 되어있는지 확인을 하며, 있을경우 true, 없을경우 false를 반환한다.
+        );
+    };
+
+    const filteredTodos = getFilteredDate();
+
+    const {totalCount, doneCount, notDonecount} =
+     useMemo(() => {
+        console.log("getAnalyzedData 호출!");
+
+        const totalCount = todos.length;
+        const doneCount = todos.filter(
+            (todo)=>todo.isDone
+        ).length;
+        const notDonecount = totalCount - doneCount;
+
+        return {
+            totalCount,
+            doneCount,
+            notDonecount,
+        }
+    }, [todos])
+    // 의존성 배열 : deps
+
+    // const {totalCount, doneCount, notDonecount} = getAnalyzedData()
+
+    return (
+        <div className="List">
+            <h4>Todo List 👌</h4>
+            <div>
+                total: {totalCount}
+            </div>
+            <div>
+                done: {doneCount}
+            </div>
+            <div>
+                notDone: {notDonecount}
+            </div>
+            <input
+                value = {search}
+                onChange = {onChangeSearch}
+                placeholder="검색어를 입력하세요"
+            />
+            <div className="todos_wrapper">
+                {filteredTodos.map((todo)=>{
+                    return (
+                        <TodoItem
+                            key = {todo.id}
+                            {...todo}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
+};
+
+export default List;
+
+---
+TodoItem.jsx
+
+import "./TodoItem.css";
+import { memo, useContext } from 'react';
+import { TodoDispatchContext } from "../App";
+
+const TodoItem = ({
+    id,
+    isDone,
+    content,
+    date,
+}) => {
+
+    const {onUpdate, onDelete} = useContext(TodoDispatchContext);
+
+    const onChangeCheckbox = () => {
+        onUpdate(id);
+    };
+
+    const onClickDeleteButton = () => {
+        onDelete(id);
+    };
+
+    return (
+        <div className="TodoItem">
+            <input
+                // input요소이기에 onChange로 선언을 하였음.
+                onChange={onChangeCheckbox}
+                readOnly
+                checked={isDone}
+                type="checkbox" />
+            <div className="content">{content}</div>
+            <div className="date">
+                {new Date(date).toLocaleDateString()}
+            </div>
+            <button onClick={onClickDeleteButton}>삭제</button>
+        </div>
+    );
+};
+
+export default TodoItem;
+
+// 고차 컴포넌트 (HOC)
+// export default memo(TodoItem, (prevProps, nextProps)=>{
+//     // 반환값에 따라, Props가 바뀌었는지 안바뀌었는지 판단
+//     // True -> Props 바뀌지 않음 -> 리렌더링 X
+//     // False -> Props 바뀜 -> 리렌더링 O
+
+//     if(prevProps.id !== nextProps.id) return false;
+//     if(prevProps.isDone !== nextProps.isDone) return false;
+//     if(prevProps.content !== nextProps.content) return false;
+//     if(prevProps.date !== nextProps.date) return false;
+
+//     return true;
+// });
+
+---
+Editor.jsx
+
+import { useState, useRef, useContext } from "react";
+import "./Editor.css";
+// import { TodoContext } from "../App";
+import { TodoDispatchContext } from "../App";
+
+const Editor = () => {
+    const { onCreate } = useContext(TodoDispatchContext);
+
+    const [content, setContent] = useState("");
+    const contentRef = useRef();
+
+    const onChangeContent = (e) => {
+        setContent(e.target.value);
+    };
+
+    // Enter키를 입력 하였을 경우, onSubmit 함수 실행!
+    const onKeydown = (e) => {
+        if(e.keyCode === 13){
+            onSubmit();
+        }
+    };
+
+    const onSubmit = () => {
+        // 입력폼이 공란인 경우 포커싱과 입력이 되지 않도록 하는기능 추가!
+        if (content === "") {
+            contentRef.current.focus();
+            return;
+        }
+        onCreate(content);
+        setContent(""); // 새로운 데이터 추가 후, 입력폼 초기화!
+    };
+    return (
+        <div className="Editor">
+            <input value={content}
+            ref ={contentRef}
+            onKeyDown={onKeydown}
+            onChange={onChangeContent}
+            placeholder="새로운 Todo..."/>
+            <button onClick={onSubmit}>추가</button>
+        </div>
+    );
+};
+
+export default Editor;
