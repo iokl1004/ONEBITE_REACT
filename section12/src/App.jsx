@@ -1,0 +1,51 @@
+import './App.css'
+// useNavigate : 페이지를 실제로 이동 시켜주는 네비게이트함수를 반환해줌
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import Home from './pages/Home'
+import Diary from './pages/Diary'
+import New from './pages/New'
+import Notfound from './pages/Notfound';
+
+// 1. "/" : 모든 일기를 조회하는 Home 페이지
+// 2. "/new" : 새로운 일기를 작성하는 new 페이지
+// 3. "/diary" : 일기를 상세히 조회하는 Diary 페이지
+function App() {
+  const nav = useNavigate();
+
+  // new 페이지로 이동을 한다!
+  const onClickButton = () => {
+    nav("/new");
+  }
+
+  return (
+    <>
+      <div>
+        {/* 링크방식 */}
+        <Link to={"/"}>Home</Link>
+        <Link to={"/new"}>New</Link>
+        <Link to={"/diary"}>Diary</Link>
+
+        {/* 버튼 방식 */}
+        <button onClick={onClickButton}>New 페이지로 이동</button>
+
+        {/* 기존 HTML 태그 방식         */}
+        {/* <a href="/">Home</a>
+        <a href="/new">New</a>
+        <a href="/diary">Diary</a> */}
+      </div>
+      {/* Routes 컴포넌트 안에는 라우트만 들어갈수 있음! */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/new" element={<New />} />
+        {/* 1. URL Parameter 방식 : id는 URL 파라미터 값이다! */}
+        <Route path="/diary/:id" element={<Diary />} />
+
+        {/* 위의 있는 경로가 아니라면 낫파운드 화면출력! */}
+        <Route path="*" element={<Notfound />} />
+        
+      </Routes>
+    </>
+  )
+}
+
+export default App;

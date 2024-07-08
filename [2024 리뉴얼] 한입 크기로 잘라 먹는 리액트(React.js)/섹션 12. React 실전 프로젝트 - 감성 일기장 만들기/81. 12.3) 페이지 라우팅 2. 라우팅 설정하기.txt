@@ -1,0 +1,100 @@
+81. 12.3) 페이지 라우팅 2. 라우팅 설정하기
+React Router 설치!
+npmjs.com에 등록되어 있는 라이브러리
+대다수의 리액트 앱이 사용하고 있는 대표격 라이브러리
+
+1. 라이브러리 추가!
+npm i react-router-dom
+
+main.jsx 수정
+App.jsx 수정
+Home.jsx 추가
+New.jsx 추가
+Diary.jsx 추가
+Notfound.jsx 추가
+
+---
+main.jsx
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+import { BrowserRouter } from 'react-router-dom'    // 라우터 추가
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+    // 브라우저의 현재주소를 저장하고, 감지하는 역할을 함!
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+)
+
+---
+App.jsx
+
+import './App.css'
+import { Routes, Route } from "react-router-dom";
+import Home from './pages/Home'
+import Diary from './pages/Diary'
+import New from './pages/New'
+import Notfound from './pages/Notfound';
+
+// 1. "/" : 모든 일기를 조회하는 Home 페이지
+// 2. "/new" : 새로운 일기를 작성하는 new 페이지
+// 3. "/diary" : 일기를 상세히 조회하는 Diary 페이지
+function App() {
+
+  return (
+    // Routes 컴포넌트 안에는 라우트만 들어갈수 있음!
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/new" element={<New />} />
+      <Route path="/diary" element={<Diary />} />
+
+      {/* 위의 있는 경로가 아니라면 낫파운드 화면출력! */}
+      <Route path="*" element={<Notfound />} />
+      
+    </Routes>
+  )
+}
+
+export default App;
+
+---
+Home.jsx
+
+const Home = () => {
+    return <div>Home</div>
+}
+
+export default Home;
+
+---
+New.jsx
+
+const New = () => {
+    return <div>New</div>
+}
+
+export default New;
+
+---
+Diary.jsx
+
+const Diary = () => {
+    return <div>Diary</div>
+}
+
+export default Diary;
+
+---
+Notfound.jsx
+
+const Notfound = () => {
+    return (
+        <div>잘못된 페이지입니다.</div>
+    )
+}
+
+export default Notfound;
