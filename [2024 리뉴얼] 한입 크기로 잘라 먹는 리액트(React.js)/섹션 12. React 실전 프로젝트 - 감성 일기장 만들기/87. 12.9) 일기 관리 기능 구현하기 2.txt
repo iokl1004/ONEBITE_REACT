@@ -1,3 +1,10 @@
+87. 12.9) 일기 관리 기능 구현하기 2
+
+App.jsx 수정
+
+---
+App.jsx
+
 import './App.css'
 // useNavigate : 페이지를 실제로 이동 시켜주는 네비게이트함수를 반환해줌
 import { useReducer, useRef, createContext } from 'react';
@@ -100,6 +107,27 @@ function App() {
 
   return (
     <>
+      <button onClick={() => {
+        onCreate(new Date().getTime(), 1, "Hello");
+      }}
+      >
+        일기 추가 테스트
+      </button>
+
+      <button onClick={() => {
+        onUpdate(1, new Date().getTime(), 3, "수정된 일기입니다.");
+      }}
+      >
+        일기 수정 테스트
+      </button>
+
+      <button onClick={() => {
+        onDelete(1);
+      }}
+      >
+        일기 삭제 테스트
+      </button>
+
       <DiaryStateContext.Provider value={data} >
         <DiaryDispatchContext.Provider
           value={{

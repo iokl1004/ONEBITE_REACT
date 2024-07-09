@@ -8,7 +8,7 @@ const Diary = () => {
     console.log(params);
 
     // 1. URL Parameter 방식
-    return <div>{params.id}Diary</div>
+    return <div>{params.id}번 일기입니다 ~~</div>
 }
 
 export default Diary;
