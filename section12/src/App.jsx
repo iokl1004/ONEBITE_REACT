@@ -17,15 +17,21 @@ import { getEmotionImage } from './util/get-emotion-image.js';
 const mockData = [
   {
     id : 1,
-    createdDate : new Date().getTime(),
+    createdDate : new Date("2024-07-10").getTime(),
     emotionId : 1,
     content : "1번 일기 내용",
   },
   {
     id : 2,
-    createdDate : new Date().getTime(),
+    createdDate : new Date("2024-07-09").getTime(),
     emotionId : 2,
     content : "2번 일기 내용",
+  },
+  {
+    id : 3,
+    createdDate : new Date("2024-06-01").getTime(),
+    emotionId : 3,
+    content : "3번 일기 내용",
   },
 ];
 
@@ -50,10 +56,10 @@ function reducer(state, action) {
 }
 
 // 일기 데이터를 공급할 컨테스트 추가
-const DiaryStateContext = createContext();
+export const DiaryStateContext = createContext();
 
 // 일기를 수정하는 함수들도 함께 컨텍스트를 통하여 공급하도록 해보자!
-const DiaryDispatchContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 
 function App() {

@@ -1,0 +1,196 @@
+92. 12.14) New 페이지 구현하기 2. 기능
+
+New.jsx 수정
+Editor.jsx 수정
+EmotionItem.jsx 수정
+
+---
+New.jsx
+
+import Header from "../components/Header";
+import Button from "../components/Button";
+import Editor from "../components/Editor";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { DiaryDispatchContext } from "../App";
+
+const New = () => {
+    // App 컴포넌트로 부터 공급받음
+    const { onCreate } = useContext(DiaryDispatchContext)
+    const nav = useNavigate();
+
+    const onSubmit = (input) => {
+        onCreate(
+            input.createdDate.getTime(),    // 타임 스탬프 형태로 저장
+            input.emotionId,
+            input.content,
+        );
+
+        // 뒤로가기 방지 차원에서 두번째 임자를 추가해 준다!
+        // 홈페이지로 이동하면서 뒤로가기 방지!
+        nav('/', {replace : true});
+    };
+
+    return (
+        <div>
+            <Header title = {"새 일기 쓰기"}
+            leftChild={
+                <Button onClick={() => nav(-1)} text={"<뒤로 가기"} />}
+        />
+        <Editor onSubmit={onSubmit} />
+        </div>
+    )
+}
+
+export default New;
+
+---
+Editor.jsx
+
+import "./Editor.css";
+import EmotionItem from "./EmotionItem";
+import Button from "./Button";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const emotionList = [
+    {
+        emotionId : 1,
+        emotionName : "완전 좋음"
+    },
+    {
+        emotionId : 2,
+        emotionName : "좋음"
+    },
+    {
+        emotionId : 3,
+        emotionName : "그럭저럭"
+    },
+    {
+        emotionId : 4,
+        emotionName : "나쁨"
+    },
+    {
+        emotionId : 5,
+        emotionName : "끔찍함"
+    },
+];
+
+const getStringedDate = (targetDate) => {
+    // 날짜 -> YYYY-MM-DD
+    let year = targetDate.getFullYear();
+    let month = targetDate.getMonth() + 1;
+    let date = targetDate.getDate();
+
+    if(month < 10){
+        month = `0${month}`;
+    }
+    if(date < 10) {
+        date = `0${date}`;
+    }
+
+    return `${year}-${month}-${date}`;
+}
+
+const Editor = ( { onSubmit }) => {
+    const [input, setInput] = useState({
+        createdDate : new Date(),
+        emotionId : 3,
+        content : "",
+    });
+
+    const nav = useNavigate();
+
+    const onChangeInput = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+
+        if(name === 'createdDate') {
+            value = new Date(value);
+        }
+
+        setInput({
+            ...input,
+            [name] : value,
+        });
+    };
+
+    const onClickSubmitButton = () => {
+        onSubmit(input);
+    };
+
+    return (
+        <div className="Editor">
+            <section className="date_section">
+                <h4>오늘의 날짜</h4>
+                <input
+                    name = "createdDate"
+                    onChange={onChangeInput}
+                    value={getStringedDate(input.createdDate)}
+                    type="date"
+                />
+            </section>
+            <section className="emotion_section">
+                <h4>오늘의 감정</h4>
+                <div className="emotion_list_weapper">
+                    {emotionList.map((item) => (
+                        <EmotionItem
+                            onClick={()=> onChangeInput({
+                                target : {
+                                    name : "emotionId",
+                                    value : item.emotionId,
+                                },                                
+                            })
+                            }
+                            key={item.emotionId} {...item}
+                            isSelected={item.emotionId === input.emotionId}
+                        />
+                    ))}
+                </div>
+            </section>
+            <section className="content_section">
+                <h4>오늘의 일기</h4>
+                <textarea
+                    name="content"
+                    value={input.content}
+                    onChange={onChangeInput}
+                    placeholder="오늘은 어땠나요?"/>
+            </section>
+            <section className="button_section">
+                <Button
+                    onClick ={()=> nav(-1)}
+                    text={"취소하기"} />
+                <Button
+                    onClick={onClickSubmitButton}
+                    text={"작성완료"}
+                    type={"POSITIVE"} />
+            </section>
+        </div>
+    ) 
+};
+
+export default Editor;
+
+---
+EmotionItem.jsx
+
+import "./EmotionItem.css";
+import { getEmotionImage } from "../util/get-emotion-image";
+
+const EmotionItem = ({
+    emotionId,
+    emotionName,
+    isSelected,
+    onClick }) => {
+    return (
+        <div
+            onClick={onClick}
+            className={`EmotionItem ${isSelected ? `EmotionItem_on_${emotionId}` : ""}`}>
+            <img className = "emotion_img"
+                src={getEmotionImage(emotionId)} />
+            <div className="emotion_name"> {emotionName} </div>
+        </div>
+    );
+};
+
+export default EmotionItem;
