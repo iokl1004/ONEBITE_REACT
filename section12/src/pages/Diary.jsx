@@ -1,14 +1,45 @@
 // 현재 브라우저에 명시한 파라미터의 값을 가져온다!
 // 1. URL Parameter 방식
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Button from "../components/Button";
+import Viewer from "../components/Viewer";
+import useDiary from "../hooks/useDiary";
+import { getStringedDate } from "../util/get-stringed-date";
 
 const Diary = () => {
     // 1. URL Parameter 방식
     const params = useParams();
-    console.log(params);
+    const nav = useNavigate();
+
+    const curDiaryItem = useDiary(params.id);
+
+    if(!curDiaryItem) {
+        return <div>데이터 로딩중...!</div>
+    }
+
+    const { createdDate, emotionId, content } = curDiaryItem;
+    const tilte = getStringedDate(new Date(createdDate));
 
     // 1. URL Parameter 방식
-    return <div>{params.id}번 일기입니다 ~~</div>
+    return (
+        <div>
+            <Header
+                title={`${tilte} 기록`}
+                leftChild={
+                    <Button
+                        onClick={() => nav(-1)}
+                        text={"< 뒤로가기"}
+                    />}
+                rightChild={
+                    <Button
+                        onClick={()=> nav(`/edit/${params.id}`)}
+                        text={"수정하기"}
+                    />}
+            />
+            <Viewer emotionId={emotionId} content={content} />
+        </div>
+    ) 
 }
 
 export default Diary;

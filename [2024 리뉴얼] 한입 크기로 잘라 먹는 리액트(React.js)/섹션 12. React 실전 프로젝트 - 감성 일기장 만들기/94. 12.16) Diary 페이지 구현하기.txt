@@ -1,0 +1,307 @@
+94. 12.16) Diary 페이지 구현하기
+
+Diary.jsx 파일 수정
+src/components/Viewer.jsx 파일 추가
+src/components/Viewer.css 파일 추가
+util/constant.js 파일 추가
+src/hooks/useDiary.jsx 파일 추가
+Edit.jsx 파일 수정
+src/util/get-stringed-date.js 파일 추가
+
+---
+Diary.jsx 파일 수정
+
+// 현재 브라우저에 명시한 파라미터의 값을 가져온다!
+// 1. URL Parameter 방식
+import { useParams, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Button from "../components/Button";
+import Viewer from "../components/Viewer";
+import useDiary from "../hooks/useDiary";
+import { getStringedDate } from "../util/get-stringed-date";
+
+const Diary = () => {
+    // 1. URL Parameter 방식
+    const params = useParams();
+    const nav = useNavigate();
+
+    const curDiaryItem = useDiary(params.id);
+
+    if(!curDiaryItem) {
+        return <div>데이터 로딩중...!</div>
+    }
+
+    const { createdDate, emotionId, content } = curDiaryItem;
+    const tilte = getStringedDate(new Date(createdDate));
+
+    // 1. URL Parameter 방식
+    return (
+        <div>
+            <Header
+                title={`${tilte} 기록`}
+                leftChild={
+                    <Button
+                        onClick={() => nav(-1)}
+                        text={"< 뒤로가기"}
+                    />}
+                rightChild={
+                    <Button
+                        onClick={()=> nav(`/edit/${params.id}`)}
+                        text={"수정하기"}
+                    />}
+            />
+            <Viewer emotionId={emotionId} content={content} />
+        </div>
+    ) 
+}
+
+export default Diary;
+
+---
+src/components/Viewer.jsx 파일 추가
+
+import "./Viewer.css";
+import { getEmotionImage } from "../util/get-emotion-image";
+import { emotionList } from "../util/constant";
+
+const Viewer = ({emotionId, content}) => {
+    const emotionItem = emotionList.find(
+        (item) => String(item.emotionId) === String(emotionId)
+    );
+
+    return (
+        <div className="Viewer">
+            <section className="img_section">
+                <h4>오늘의 감정</h4>
+                <div className={`emotion_img_wrapper emotion_img_wrapper_${emotionId}`}>
+                    <img src={getEmotionImage(emotionId)} />
+                    <div>{emotionItem.emotionName}</div>
+                </div>
+            </section>
+            <section className="content_section">
+                <h4>오늘의 일기</h4>
+                <div className="content_wrapper">
+                    <p>{content}</p>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default Viewer;
+
+---
+src/components/Viewer.css 파일 추가
+
+.Viewer > section {
+    width : 100%;
+    margin-bottom: 100px;
+
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+    text-align: center;
+}
+
+.Viewer > section > h4 {
+    font-size : 22px;
+    font-weight: bold;
+}
+
+.Viewer .emotion_img_wrapper {
+    width : 250px;
+    height: 250px;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    color : white;
+    font-size: 25px;
+}
+
+.Viewer .emotion_img_wrapper_1 {
+    background-color: rgb(100, 201, 100);
+}
+
+.Viewer .emotion_img_wrapper_2 {
+    background-color: rgb(157, 215, 114);
+}
+
+.Viewer .emotion_img_wrapper_3 {
+    background-color: rgb(253, 206, 23);
+}
+
+.Viewer .emotion_img_wrapper_4 {
+    background-color: rgb(253, 132, 70);
+}
+
+.Viewer .emotion_img_wrapper_5 {
+    background-color: rgb(253, 86, 95);
+}
+
+.Viewer .content_wrapper {
+    width : 100%;
+    background-color: rgb(236, 236, 236);
+    border-radius: 5px;
+
+    word-break: keep-all;
+    overflow-wrap: break-word;      /* 자연스러운 줄바꿈    */
+}
+
+.Viewer .content_wrapper > p {
+    padding: 20px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 2.5;
+}
+
+---
+util/constant.js 파일 추가
+
+export const emotionList = [
+    {
+        emotionId : 1,
+        emotionName : "완전 좋음"
+    },
+    {
+        emotionId : 2,
+        emotionName : "좋음"
+    },
+    {
+        emotionId : 3,
+        emotionName : "그럭저럭"
+    },
+    {
+        emotionId : 4,
+        emotionName : "나쁨"
+    },
+    {
+        emotionId : 5,
+        emotionName : "끔찍함"
+    },
+];
+
+---
+src/hooks/useDiary.jsx 파일 추가
+
+// 커스텀 훅 생성!
+import { useContext, useState, useEffect } from "react";
+import { DiaryStateContext } from "../App";
+import { useNavigate } from "react-router-dom";
+
+const useDiary = (id) => {
+    const data = useContext(DiaryStateContext);
+    const [curDiaryItem, setCurDiaryItem] = useState();
+
+    const nav = useNavigate();
+
+    useEffect(() => {
+        const currentDiaryItem = data.find(
+            (item) => String(id) === String(id)
+        );
+
+        // 존재하지 않는 다이어리 접속 시!
+        if(!currentDiaryItem) {
+            window.alert("존재 하지 않는 일기 입니다.")
+            nav("/", {replace : true});
+        }
+
+        // 존재 하는 다이어리 인경우 
+        setCurDiaryItem(currentDiaryItem);
+    }, [id, data] ); // 컴포넌트가 마운트 된 이후 이거나, params의 id 혹은 데이터가 변경될 경우에만!
+
+    return curDiaryItem;
+};
+
+export default useDiary;
+
+---
+Edit.jsx 파일 수정
+
+import { useParams, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Button from "../components/Button";
+import Editor from "../components/Editor";
+import { useEffect, useContext, useState } from "react";
+import { DiaryDispatchContext, DiaryStateContext } from "../App";
+import useDiary from "../hooks/useDiary";
+
+const Edit = () => {
+    const params = useParams();
+    const nav = useNavigate();
+    const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
+    const curDiaryItem = useDiary(params.id);
+
+    const onClickDelete = () => {
+        if (
+        // 브라우저의 내장기능을 사용하는 함수 이며, 브라우저의 팝업을 보여주는 함수이다.
+        // true : 확인버튼
+        // false : 취소버튼
+            window.confirm("일기를 정말 삭제 할까요? 다시 복구되지 않아요!")
+        ) {
+            // 일기 삭제 로직
+            onDelete(params.id);
+            // 홈페이지로 보내주면서, 뒤로가기 방지!
+            nav('/', {replace : true});
+        }
+    };
+
+    const onSubmit = (input) => {
+        if(window.confirm("일기를 정말 수정 할까요?"))
+        {
+            onUpdate(
+                params.id,
+                input.createdDate.getTime(), // 타임 스탬프 형태로 저장
+                input.emotionId,
+                input.content,
+            );
+            nav("/", { replace : true});
+        }
+    }
+    
+    return (
+        <div>
+            <Header
+                title={"일기 수정하기"}
+                leftChild={
+                    <Button
+                        onClick={() => nav(-1)}
+                        text={"< 뒤로가기"}
+                    />}
+                rightChild={
+                    <Button
+                        onClick={onClickDelete}
+                        text={"삭제하기"}
+                        type={"NEGATIVE"}
+                    />}
+            />
+            <Editor onSubmit={onSubmit} initData={curDiaryItem}/>
+        </div>
+    )
+}
+
+export default Edit;
+
+---
+src/util/get-stringed-date.js 파일 추가
+
+// 데이트객체를 전달받아 yyyy-mm-dd 형식으로 반환을 한다!
+export const getStringedDate = (targetDate) => {
+    // 날짜 -> YYYY-MM-DD
+    let year = targetDate.getFullYear();
+    let month = targetDate.getMonth() + 1;
+    let date = targetDate.getDate();
+
+    if(month < 10){
+        month = `0${month}`;
+    }
+    if(date < 10) {
+        date = `0${date}`;
+    }
+
+    return `${year}-${month}-${date}`;
+};
