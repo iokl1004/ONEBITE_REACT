@@ -1,3 +1,37 @@
+95. 12.17) 웹 스토리지 이용하기
+
+최적화를 진행하지않는다.
+왜냐 최적화를 할 부분이 별로 없기 때문이다.
+
+. 언제 필요하냐?
+1. 비용이 많이 드는 계산
+ex) API를 호출해서~ 데이터를 가공하고~ 하는 등등의 작업들
+
+2. 매우 여러번, 반복적으로 실행 되는 연산
+ex) API를 호출해서~ 데이터를 가공하고~ 하는 등등의 작업들
+
+. 웹 스토리지란? 웹 브라우저에 기본적으로 내장되어 있는 데이터베이스
+1. 별도의 프로그램 설치 필요 X, 라이브러리 설치 필요 X
+2. 그냥 자바스크립트 내장함수 만으로 접근 가능
+ex) 값을 저장 : localStorage.setItem(key, value)
+값을 꺼냄 : localStorate.getItem(key)
+
+웹 브라우저 내장 DB(Web Storage) 종류
+. SessionStorage
+1. 브라우저 탭 별로 데이터를 보관
+2. 탭이 종료되기 전에는 데이터 유지 (새로고침)
+3. 탭이 종료되거나 꺼지면 데이터 삭제
+
+. LocalStorage
+1. 사이트 주소별로 데이터 보관
+2. 사용자가 직접 삭제하기 전까지 데이터 보관
+
+App.jsx 파일 수정
+useDiary.jsx 파일 수정
+
+---
+App.jsx 파일 수정
+
 import './App.css'
 // useNavigate : 페이지를 실제로 이동 시켜주는 네비게이트함수를 반환해줌
 import { useState, useReducer, useRef, createContext, useEffect } from 'react';
@@ -194,3 +228,37 @@ function App() {
 }
 
 export default App;
+
+---
+useDiary.jsx 파일 수정
+
+// 커스텀 훅 생성!
+import { useContext, useState, useEffect } from "react";
+import { DiaryStateContext } from "../App";
+import { useNavigate } from "react-router-dom";
+
+const useDiary = (id) => {
+    const data = useContext(DiaryStateContext);
+    const [curDiaryItem, setCurDiaryItem] = useState();
+
+    const nav = useNavigate();
+
+    useEffect(() => {
+        const currentDiaryItem = data.find(
+            (item) => String(id) === String(id)
+        );
+
+        // 존재하지 않는 다이어리 접속 시!
+        if(!currentDiaryItem) {
+            window.alert("존재 하지 않는 일기 입니다.")
+            nav("/", {replace : true});
+        }
+
+        // 존재 하는 다이어리 인경우 
+        setCurDiaryItem(currentDiaryItem);
+    }, [id, data] ); // 컴포넌트가 마운트 된 이후 이거나, params의 id 혹은 데이터가 변경될 경우에만!
+
+    return curDiaryItem;
+};
+
+export default useDiary;
