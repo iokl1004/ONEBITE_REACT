@@ -6,11 +6,15 @@ import Button from "../components/Button";
 import Viewer from "../components/Viewer";
 import useDiary from "../hooks/useDiary";
 import { getStringedDate } from "../util/get-stringed-date";
+import usePageTitle from "../hooks/usePageTitle";   // 페이지 타이틀 설정하기
 
 const Diary = () => {
     // 1. URL Parameter 방식
     const params = useParams();
     const nav = useNavigate();
+
+    // 페이지 타이틀 설정하기
+    usePageTitle(`${params.id}번 일기`);
 
     const curDiaryItem = useDiary(params.id);
 

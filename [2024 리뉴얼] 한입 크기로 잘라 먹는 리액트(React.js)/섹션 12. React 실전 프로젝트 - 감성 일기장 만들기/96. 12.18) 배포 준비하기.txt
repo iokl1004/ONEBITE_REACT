@@ -1,0 +1,66 @@
+96. 12.18) 배포 준비하기
+
+배포 준비를 위해 해야 할 작업
+
+. 페이지 타이틀 설정하기 : 웹 브라우저 탭에 표시되는 페이지의 제목.
+. Favicon 설정하기 : 브라우저 탭에 표시되는 작은 아이콘.
+. 오픈 그래프 태그 설정하기 : 웹 사이트의 링크를 공유할 때 썸네일, 제목 등의 정보를 노출하는 것.
+. 프로젝트 빌드(Build) : 빌드 시 문제 없는지 확인!
+
+---
+. 페이지 타이틀 설정하기
+1. index.html 수정
+	<title> 기인장의 감정 일기장!</title>
+
+2. src/hooks/usePageTitle.jsx 파일 생성
+// 페이지 타이틀 설정하는 Hook
+import { useEffect } from "react";
+
+const usePageTitle = (title) => {
+    // 새 일기 쓰기 화면에서의 페이지 타이틀 설정하기
+    useEffect(() => {
+        const $title = document.getElementsByTagName("title")[0];
+        $title.innerText = title;
+    }, [title]);    // 타이틀 값이 변경 되면 페이지의 타이틀을 변경해주도록 수정.
+
+};
+
+export default usePageTitle;
+
+3. New.jsx 수정
+컴포넌트 내에 아래의 구문 추가
+    // 페이지 타이틀 설정하기
+    usePageTitle("새 일기 쓰기");
+
+4. Edit.jsx 수정
+컴포넌트 내에 아래의 구문 추가
+    // 페이지 타이틀 설정하기
+    usePageTitle(`${params.id}번 일기 수정`);
+
+5. Diary.jsx 수정
+컴포넌트 내에 아래의 구문 추가
+    // 페이지 타이틀 설정하기
+    usePageTitle(`${params.id}번 일기`);
+
+6. Home.jsx 수정
+컴포넌트 내에 아래의 구문 추가
+    // 페이지 타이틀 설정하기
+    usePageTitle("감정 일기장");
+
+---
+. Favicon 설정하기
+1. 아이콘 및 썸네일 폴더 안에 있는 favicon.ico, thumbnail.png 파일들을 public 폴더로 이동시킨다.
+2. index.html 수정
+	<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+
+---
+. 오픈 그래프 태그 설정하기
+1. index.html 수정 (title 아래에)
+	<meta propery="og:title" content="감정 일기장" />
+	<meta propery="og:description" content="나만의 작은 감정 일기장" />
+	<meta propery="og:image" content="/thumbnail.png" />
+2. 확인 방법은 개발자도구(F12) 에서 Elements 탭에 head 태그 안에 적용되어있는것을 확인 할 수 있음.
+
+---
+. 프로젝트 빌드
+1. 터미널 창에 "npm run build" Enter!

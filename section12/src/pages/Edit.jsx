@@ -5,12 +5,16 @@ import Editor from "../components/Editor";
 import { useEffect, useContext, useState } from "react";
 import { DiaryDispatchContext, DiaryStateContext } from "../App";
 import useDiary from "../hooks/useDiary";
+import usePageTitle from "../hooks/usePageTitle";   // 페이지 타이틀 설정하기
 
 const Edit = () => {
     const params = useParams();
     const nav = useNavigate();
     const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
     const curDiaryItem = useDiary(params.id);
+    
+    // 페이지 타이틀 설정하기
+    usePageTitle(`${params.id}번 일기 수정`);
 
     const onClickDelete = () => {
         if (

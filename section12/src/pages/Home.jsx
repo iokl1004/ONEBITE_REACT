@@ -4,9 +4,9 @@ import { DiaryStateContext } from "../App";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import DiaryList from "../components/DiaryList";
+import usePageTitle from "../hooks/usePageTitle";   // 페이지 타이틀 설정하기
 
 const getMonthlyData = (pivotDate, data) => {
-
     // 이번달의 가장 첫번째 시간
     const beginTime = new Date(
         pivotDate.getFullYear(),
@@ -39,6 +39,9 @@ const Home = () => {
     const [pivotDate, setPrivotDate] = useState(new Date());
 
     const monthlyData = getMonthlyData(pivotDate, data);
+
+    // 페이지 타이틀 설정하기
+    usePageTitle("감정 일기장");
 
     const onIncreaseMonth = () => {
         setPrivotDate(
